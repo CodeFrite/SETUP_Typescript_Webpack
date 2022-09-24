@@ -1,6 +1,20 @@
-import { ProjectInput } from './components/project-input';
-import { ProjectList } from './components/project-list';
+import { NeuronRelu } from "./models/neuron";
 
-new ProjectInput();
-new ProjectList('active');
-new ProjectList('finished');
+// Get canvas rendering context
+var canvasElem = document.getElementById("canvasElem") as HTMLCanvasElement;
+var ctx = canvasElem.getContext("2d");
+
+if (!ctx) {
+  Error("Couldn't get Canvas Rendering Context");
+}
+
+// Attach mouse click event listener to canvas
+canvasElem.addEventListener("mousedown", (e) => addNeuron(e));
+
+// Add a neuron to the neural network
+var network: NeuronRelu[] = [];
+function addNeuron(e: MouseEvent) {
+  let n = new NeuronRelu(e.clientX, e.clientY);
+  network.push(n);
+  n.draw(ctx!);
+}
